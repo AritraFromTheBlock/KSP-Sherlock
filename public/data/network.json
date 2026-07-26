@@ -1,0 +1,252 @@
+[
+  {
+    "source": "accused_RO118",
+    "target": "case_C1",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO118",
+    "target": "case_C2",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO118",
+    "target": "case_C3",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO118",
+    "target": "case_C4",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO118",
+    "target": "case_C5",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO178",
+    "target": "case_C6",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO178",
+    "target": "case_C7",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO178",
+    "target": "case_C8",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO178",
+    "target": "case_C9",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO178",
+    "target": "case_C10",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO224",
+    "target": "case_C11",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO224",
+    "target": "case_C12",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO224",
+    "target": "case_C13",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO224",
+    "target": "case_C14",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO224",
+    "target": "case_C15",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO125",
+    "target": "case_C16",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO125",
+    "target": "case_C17",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO125",
+    "target": "case_C18",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO125",
+    "target": "case_C19",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO125",
+    "target": "case_C20",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO141",
+    "target": "case_C21",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO141",
+    "target": "case_C22",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO141",
+    "target": "case_C23",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO141",
+    "target": "case_C24",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO141",
+    "target": "case_C25",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO217",
+    "target": "case_C26",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO217",
+    "target": "case_C27",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO217",
+    "target": "case_C28",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO217",
+    "target": "case_C29",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO217",
+    "target": "case_C30",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO54",
+    "target": "case_C31",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO54",
+    "target": "case_C32",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO54",
+    "target": "case_C33",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO54",
+    "target": "case_C34",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO54",
+    "target": "case_C35",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO73",
+    "target": "case_C36",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO73",
+    "target": "case_C37",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO73",
+    "target": "case_C38",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO73",
+    "target": "case_C39",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO73",
+    "target": "case_C40",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO245",
+    "target": "case_C41",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO245",
+    "target": "case_C42",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO245",
+    "target": "case_C43",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO245",
+    "target": "case_C44",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO245",
+    "target": "case_C45",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO172",
+    "target": "case_C46",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO172",
+    "target": "case_C47",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO172",
+    "target": "case_C48",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO172",
+    "target": "case_C49",
+    "relation": "ACCUSED_IN"
+  },
+  {
+    "source": "accused_RO172",
+    "target": "case_C50",
+    "relation": "ACCUSED_IN"
+  }
+]

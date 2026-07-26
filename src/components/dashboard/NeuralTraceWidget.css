@@ -1,0 +1,186 @@
+/*
+  ============================================================
+  INTELLIGENCE SCANNER WIDGET STYLES
+  ============================================================
+*/
+.sherlock-scanner-panel {
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(14, 165, 233, .05) 1px, transparent 1px) 0 0 / 30px 30px,
+    linear-gradient(90deg, rgba(14, 165, 233, .05) 1px, transparent 1px) 0 0 / 30px 30px,
+    radial-gradient(circle at center, #0f172a, #020617 80%);
+  border: 1px solid rgba(14, 165, 233, .15);
+  box-shadow: 0 0 30px rgba(14, 165, 233, .05);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.sherlock-scanner-panel .header {
+  padding: 20px;
+  color: #38bdf8;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 13px;
+  z-index: 10;
+}
+
+.sherlock-scanner-panel .header:before {
+  content: "● ";
+  color: #ef4444;
+  animation: blink 1.5s infinite;
+}
+
+.sherlock-scanner-panel .scanner {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  border: 1px solid rgba(14, 165, 233, .3);
+  box-shadow: 0 0 20px rgba(14, 165, 233, .1), inset 0 0 30px rgba(14, 165, 233, .05);
+  background: rgba(14, 165, 233, 0.02);
+}
+
+.sherlock-scanner-panel .ring {
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  border: 1px dashed rgba(14, 165, 233, .2);
+}
+
+.sherlock-scanner-panel .ring.r2 { inset: 65px; border: 1px solid rgba(14, 165, 233, .15); }
+.sherlock-scanner-panel .ring.r3 { inset: 110px; border: 1px dashed rgba(14, 165, 233, .2); }
+
+.sherlock-scanner-panel .cross:before,
+.sherlock-scanner-panel .cross:after {
+  content: "";
+  position: absolute;
+  background: rgba(14, 165, 233, .15);
+}
+
+.sherlock-scanner-panel .cross:before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.sherlock-scanner-panel .cross:after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+}
+
+.sherlock-scanner-panel .sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(14, 165, 233, .4), transparent 60deg, transparent 360deg);
+  mask: radial-gradient(circle, transparent 0 25%, #000 26%);
+  -webkit-mask: radial-gradient(circle, transparent 0 25%, #000 26%);
+  animation: spin 4s linear infinite;
+}
+
+.sherlock-scanner-panel .dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px #38bdf8;
+  animation: pulse-center 2s infinite;
+}
+
+.sherlock-scanner-panel .blip {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 8px #22d3ee;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: pulse-blip 3s infinite;
+}
+
+.sherlock-scanner-panel .log {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 80px;
+  color: #7dd3fc;
+  font-size: 13px;
+  z-index: 10;
+}
+
+.sherlock-scanner-panel .bar {
+  height: 6px;
+  background: rgba(14, 165, 233, 0.1);
+  border-radius: 3px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.sherlock-scanner-panel .fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  animation: load 7s ease-in-out infinite;
+}
+
+.sherlock-scanner-panel .footer {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  right: 24px;
+  color: #64748b;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.sherlock-scanner-panel .status {
+  color: #38bdf8;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-center {
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.8; }
+}
+
+@keyframes pulse-blip {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  20% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.2); }
+  50% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+  80% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+}
+
+@keyframes load {
+  0%   { width: 0; opacity: 1; }
+  80%  { width: 100%; opacity: 1; }
+  90%  { width: 100%; opacity: 0; }
+  100% { width: 0; opacity: 0; }
+}
+
+@keyframes blink {
+  50% { opacity: .3; }
+}

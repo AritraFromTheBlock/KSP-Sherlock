@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+:root {
+  color-scheme: dark;
+  /* Dark Mode (Default) */
+  --color-void: 2 6 23;      /* #020617 */
+  --color-abyss: 15 23 42;    /* #0F172A */
+  --color-panel: 30 41 59;    /* #1E293B */
+  --color-edge: 51 65 85;     /* #334155 */
+  
+  --text-primary: #C7D2E4;      /* slate-200 */
+  --text-secondary: #7C8AA8;    /* slate-400 */
+  --text-muted: #64748B;        /* slate-500 */
+  
+  --bg-scroll-track: #0F172A;
+  --bg-scroll-thumb: #334155;
+}
+
+.light {
+  /* Light Mode */
+  --color-void: 248 250 252;  /* slate-50 */
+  --color-abyss: 241 245 249; /* slate-100 */
+  --color-panel: 255 255 255; /* white */
+  --color-edge: 226 232 240;  /* slate-200 */
+  
+  --text-primary: #1E293B;      /* slate-800 */
+  --text-secondary: #475569;    /* slate-600 */
+  --text-muted: #94A3B8;        /* slate-400 */
+  
+  --bg-scroll-track: #F1F5F9;
+  --bg-scroll-thumb: #CBD5E1;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--color-void));
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar to stay on-brand */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-scroll-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-scroll-thumb);
+  border-radius: 4px;
+}
+
+/* Autofill override so Chrome doesn't inject a white input background */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #1E293B inset !important;
+  -webkit-text-fill-color: #C7D2E4 !important;
+  caret-color: #C7D2E4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom Leaflet Dark Theme Overrides */
+.leaflet-popup-content-wrapper {
+  background: #0f172a !important;
+  color: #c7d2e4 !important;
+  border: 1px solid rgba(51, 65, 85, 0.8) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.7) !important;
+  padding: 4px !important;
+}
+
+.leaflet-popup-tip {
+  background: #0f172a !important;
+  border: 1px solid rgba(51, 65, 85, 0.8) !important;
+}
+
+.leaflet-popup-close-button {
+  color: #94a3b8 !important;
+  padding: 8px 10px 0 0 !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: #f8fafc !important;
+}
+
+.leaflet-container {
+  font-family: inherit !important;
+}
+
+/* Make select dropdown options dark globally */
+option {
+  background-color: #0f172a; /* Matches bg-abyss */
+  color: #c7d2e4; /* Matches text-primary */
+}
