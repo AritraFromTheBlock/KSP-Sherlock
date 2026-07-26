@@ -38,13 +38,13 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-4">
             <Link
-              to="/login?mode=signin"
+              to="/auth?mode=signin"
               className="rounded-lg border border-transparent px-4 py-2 font-mono text-xs uppercase tracking-wider text-slate-300 transition-all hover:text-neon-bright"
             >
               Sign In
             </Link>
             <Link
-              to="/login?mode=signup"
+              to="/auth?mode=signup"
               className="rounded-lg border border-neon/50 bg-neon/10 px-6 py-2 font-mono text-xs uppercase tracking-wider text-neon-bright transition-all hover:bg-neon hover:text-void hover:shadow-neon-sm"
             >
               Sign Up
@@ -82,7 +82,7 @@ export default function LandingPage() {
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              to="/login?mode=signup"
+              to="/auth?mode=signup"
               className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-neon-dim via-neon to-neon-bright px-8 py-3.5 font-display text-sm font-semibold uppercase tracking-widest text-slate-900 shadow-neon-md transition-transform hover:scale-105"
             >
               <Shield className="h-5 w-5" />

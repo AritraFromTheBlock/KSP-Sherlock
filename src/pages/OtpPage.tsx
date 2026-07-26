@@ -1,30 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldAlert, Loader2, ArrowRight, Smartphone, RefreshCw, Key } from 'lucide-react'
 import AnimatedBackground from '../components/AnimatedBackground'
 import { useAuth } from '../context/AuthContext'
 
-export default function OtpPage() {
+export default function VerifyPage() {
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [localLoading, setLocalLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
   const [resendCooldown, setResendCooldown] = useState(30)
   const [isResending, setIsResending] = useState(false)
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   
   const navigate = useNavigate()
-  const { currentUser } = useAuth()
-
-  // If not authenticated at all, send to login
-  if (!currentUser) {
-    return <Navigate to="/login" replace />
-  }
-
-  // If already OTP verified, send to dashboard
-  if (sessionStorage.getItem('otpVerified') === 'true') {
-    return <Navigate to="/dashboard" replace />
-  }
+  const { verify2FA } = useAuth()
 
   useEffect(() => {
     let timer: NodeJS.Timeout
@@ -40,7 +30,7 @@ export default function OtpPage() {
     const newOtp = [...otp]
     newOtp[index] = value
     setOtp(newOtp)
-    setError('')
+    setErrorMsg('')
 
     // Move to next input
     if (value && index < 5) {
@@ -71,29 +61,25 @@ export default function OtpPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const code = otp.join('')
     if (code.length !== 6) {
-      setError('Please enter a 6-digit OTP code.')
+      setErrorMsg('Please enter a 6-digit OTP code.')
       return
     }
 
-    setLoading(true)
-    setError('')
+    setLocalLoading(true)
+    setErrorMsg('')
 
-    const FIXED_PIN = import.meta.env.VITE_ACCESS_PIN || "262026";
-
-    // Simulate backend verification
-    setTimeout(() => {
-      setLoading(false)
-      if (code === FIXED_PIN) {
-        sessionStorage.setItem('otpVerified', 'true')
-        navigate('/dashboard', { replace: true })
-      } else {
-        setError('Invalid OTP code. Please try again.')
-      }
-    }, 1500)
+    const success = await verify2FA(code)
+    
+    setLocalLoading(false)
+    if (success) {
+      navigate('/dashboard', { replace: true })
+    } else {
+      setErrorMsg('Invalid access code. Please try again.')
+    }
   }
 
   const handleResend = () => {
@@ -149,7 +135,7 @@ export default function OtpPage() {
           </div>
 
           <AnimatePresence>
-            {error && (
+            {errorMsg && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
@@ -157,19 +143,19 @@ export default function OtpPage() {
                 className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 flex items-center gap-2 text-xs text-red-400"
               >
                 <ShieldAlert className="w-4 h-4 shrink-0" />
-                {error}
+                {errorMsg}
               </motion.div>
             )}
           </AnimatePresence>
 
           <motion.button
             type="submit"
-            disabled={loading}
+            disabled={localLoading}
             whileHover={{ scale: 1.015 }}
             whileTap={{ scale: 0.985 }}
             className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-neon-dim via-neon to-neon-bright py-3 font-display text-sm font-semibold uppercase tracking-widest text-slate-900 shadow-neon-md transition-shadow disabled:opacity-70"
           >
-            {loading ? (
+            {localLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <>Verify & Authenticate <ArrowRight className="h-4 w-4" /></>
@@ -193,7 +179,7 @@ export default function OtpPage() {
           </button>
           
           <div className="flex items-center gap-1 font-mono text-[10px] text-slate-500">
-            <Smartphone className="w-3 h-3" /> SMS gateway connected via secure proxy
+            <Smartphone className="w-3 h-3" /> Secure Verification Gateway
           </div>
         </div>
       </motion.div>

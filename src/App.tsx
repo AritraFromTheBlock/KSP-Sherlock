@@ -1,13 +1,14 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
-import ProtectedRoute from './components/ProtectedRoute'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { PendingAuthRoute } from './components/PendingAuthRoute'
 import DashboardLayout from './components/layout/DashboardLayout'
 
 // Eager load critical initial routes
-import LoginPage from './components/LoginPage'
+import AuthPage from './components/LoginPage' // Using existing LoginPage component as AuthPage
 import LandingPage from './pages/LandingPage'
-import OtpPage from './pages/OtpPage'
+import VerifyPage from './pages/OtpPage' // Using existing OtpPage component as VerifyPage
 
 // Lazy load dashboard pages
 const DashboardHome = lazy(() => import('./pages/DashboardHome'));
@@ -37,13 +38,23 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public Login Route */}
-          <Route path="/login" element={<LoginPage />} />
+          {/* 1. Public Landing Route */}
+          <Route path="/" element={<LandingPage />} />
 
-          {/* Semi-Protected OTP Route (requires auth, handles its own checks) */}
-          <Route path="/otp" element={<OtpPage />} />
+          {/* 2. Public Auth Route (Sign In / Sign Up) */}
+          <Route path="/auth" element={<AuthPage />} />
 
-          {/* Protected Dashboard Routes (requires auth AND otp) */}
+          {/* 3. Pending Auth (2FA Verification) Route */}
+          <Route 
+            path="/verify" 
+            element={
+              <PendingAuthRoute>
+                <VerifyPage />
+              </PendingAuthRoute>
+            } 
+          />
+
+          {/* 4. Fully Protected Dashboard Routes */}
           <Route 
             path="/dashboard" 
             element={
@@ -124,9 +135,8 @@ function App() {
             } />
           </Route>
 
-          {/* Landing Page as root, unmatched paths redirect to /dashboard */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          {/* Fallback for unmatched routes */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

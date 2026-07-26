@@ -3,11 +3,11 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Loader2, ShieldCheck } from 'lucide-react';
 
-interface ProtectedRouteProps {
+interface PendingAuthRouteProps {
   children: React.ReactNode;
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+export const PendingAuthRoute: React.FC<PendingAuthRouteProps> = ({ children }) => {
   const { isAuthenticated, isPendingAuth, loading } = useAuth();
   const location = useLocation();
 
@@ -21,27 +21,26 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           </div>
           <div className="text-center font-mono">
             <p className="text-sm font-semibold tracking-wider text-slate-200 uppercase">
-              Verifying Security Credentials
+              Verifying Session State
             </p>
-            <p className="text-xs text-slate-500 mt-1">Authenticating terminal session...</p>
           </div>
         </div>
       </div>
     );
   }
 
-  // If fully authenticated, allow access to dashboard
+  // If already fully authenticated, redirect to dashboard
   if (isAuthenticated) {
+    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+  }
+
+  // If they are pending auth (Firebase logged in, but no OTP), let them view this page
+  if (isPendingAuth) {
     return <>{children}</>;
   }
 
-  // If logged in with Firebase but OTP not verified, force them to verify
-  if (isPendingAuth) {
-    return <Navigate to="/verify" state={{ from: location }} replace />;
-  }
-
-  // If not logged in at all, kick to /auth
+  // If they aren't logged in at all, kick them out to /auth
   return <Navigate to="/auth" state={{ from: location }} replace />;
 };
 
-export default ProtectedRoute;
+export default PendingAuthRoute;

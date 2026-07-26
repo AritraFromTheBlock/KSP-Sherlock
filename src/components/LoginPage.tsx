@@ -87,7 +87,7 @@ export default function LoginPage() {
         setSuccessMessage('Account created successfully. Please sign in.')
         setPassword('')
         setFullName('')
-        navigate('/login?mode=signin', { replace: true })
+        navigate('/auth?mode=signin', { replace: true })
       } else {
         await loginWithEmail(officerId, password)
       }
@@ -163,7 +163,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => {
-                navigate('/login?mode=signin', { replace: true })
+                navigate('/auth?mode=signin', { replace: true })
                 setLocalError('')
                 setSuccessMessage('')
               }}
@@ -178,7 +178,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => {
-                navigate('/login?mode=signup', { replace: true })
+                navigate('/auth?mode=signup', { replace: true })
                 setLocalError('')
                 setSuccessMessage('')
               }}
