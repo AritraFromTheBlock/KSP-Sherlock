@@ -129,6 +129,9 @@ export default function VerifyPage() {
               Auto-fill
             </button>
           </div>
+          <p className="mt-2.5 text-[11px] text-amber-400/80 font-mono italic max-w-sm">
+            * Note: 262026 is a temporary demo PIN for evaluation. Dynamic SMS/Email OTP generation will be integrated in future releases.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
