@@ -36,20 +36,6 @@ export default function LandingPage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Link
-              to="/auth?mode=signin"
-              className="rounded-lg border border-transparent px-4 py-2 font-mono text-xs uppercase tracking-wider text-slate-300 transition-all hover:text-neon-bright"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/auth?mode=signup"
-              className="rounded-lg border border-neon/50 bg-neon/10 px-6 py-2 font-mono text-xs uppercase tracking-wider text-neon-bright transition-all hover:bg-neon hover:text-void hover:shadow-neon-sm"
-            >
-              Sign Up
-            </Link>
-          </div>
         </div>
       </header>
 
