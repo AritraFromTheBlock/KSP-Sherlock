@@ -26,7 +26,7 @@ export default function LandingPage() {
       <header className="relative z-10 w-full border-b border-edge bg-panel/40 backdrop-blur-md px-6 py-4">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/ksp-logo.svg" alt="Karnataka State Police Logo" className="h-12 w-auto drop-shadow-md" />
+            <img src="https://raw.githubusercontent.com/AritraFromTheBlock/KSP-Sherlock/main/public/ksp-logo.svg" alt="Karnataka State Police Logo" className="h-12 w-auto drop-shadow-md" />
             <div>
               <h1 className="font-display text-xl font-bold tracking-widest text-slate-100">
                 KSP <span className="text-neon-glow">SHERLOCK</span>

@@ -189,7 +189,7 @@ function parseCSV(text: string): FactCase[] {
 
 export async function loadFactCases(): Promise<FactCase[]> {
   if (_cachedDataset) return _cachedDataset;
-  const res = await fetch('/data/fact_cases.csv');
+  const res = await fetch('./data/fact_cases.csv');
   const text = await res.text();
   _cachedDataset = parseCSV(text);
   return _cachedDataset;

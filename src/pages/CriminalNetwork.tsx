@@ -63,9 +63,9 @@ export default function CriminalNetwork() {
   const fetchNetworkData = useCallback(() => {
     setLoading(true);
     setError(null);
-    fetch('/data/network.json')
+    fetch('./data/network.json')
       .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}: Failed to load /data/network.json`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}: Failed to load ./data/network.json`);
         return res.json();
       })
       .then((data: RawEdge[]) => {

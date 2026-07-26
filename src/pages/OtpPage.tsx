@@ -115,6 +115,20 @@ export default function VerifyPage() {
           <p className="mt-2 text-sm text-slate-400">
             Enter the 6-digit secure code sent to your registered mobile device to access the terminal.
           </p>
+          <div className="mt-3.5 inline-flex items-center gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3.5 py-2 text-xs text-amber-300 font-mono shadow-sm">
+            <Key className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>Demo Static PIN: <strong className="text-amber-200 tracking-wider font-bold">262026</strong></span>
+            <button
+              type="button"
+              onClick={() => {
+                setOtp(['2', '6', '2', '0', '2', '6']);
+                setErrorMsg('');
+              }}
+              className="ml-1 rounded bg-amber-500/20 px-2 py-0.5 text-[10px] font-sans font-semibold text-amber-200 hover:bg-amber-500/40 transition-colors uppercase tracking-wider border border-amber-500/30"
+            >
+              Auto-fill
+            </button>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

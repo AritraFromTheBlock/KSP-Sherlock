@@ -123,7 +123,7 @@ export default function LoginPage() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mb-6 flex flex-col items-center text-center"
         >
-          <img src="/ksp-logo.svg" alt="Karnataka State Police" className="h-24 w-auto drop-shadow-md mb-2" />
+          <img src="https://raw.githubusercontent.com/AritraFromTheBlock/KSP-Sherlock/main/public/ksp-logo.svg" alt="Karnataka State Police" className="h-24 w-auto drop-shadow-md mb-2" />
           <div className="mt-2 flex items-center gap-2">
             <h1 className="font-display text-2xl font-bold tracking-wide text-slate-200">
               KSP <span className="text-neon-bright">SHERLOCK</span>

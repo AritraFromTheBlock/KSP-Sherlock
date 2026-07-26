@@ -82,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-abyss border border-edge flex items-center justify-center p-1 relative group">
             <div className="absolute inset-0 bg-neon/10 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity" />
-            <img src="/ksp-logo.svg" alt="KSP Logo" className="w-full h-full object-contain relative z-10" />
+            <img src="https://raw.githubusercontent.com/AritraFromTheBlock/KSP-Sherlock/main/public/ksp-logo.svg" alt="KSP Logo" className="w-full h-full object-contain relative z-10" />
           </div>
           <div>
             <h1 className="font-display font-bold text-lg text-slate-100 tracking-wider flex items-center gap-1.5">
