@@ -37,7 +37,6 @@ KSP-Sherlock/
 │   ├── hooks/              # Custom React hooks
 │   ├── pages/              # Top-level route components (Dashboard, Profiling, etc.)
 │   ├── services/           # External API integration and business logic
-│   ├── supabase/           # Supabase config and edge functions (if applicable)
 │   ├── types/              # TypeScript interface definitions
 │   ├── utils/              # Helper functions and utilities
 │   ├── App.tsx             # Main routing and application wrapper
