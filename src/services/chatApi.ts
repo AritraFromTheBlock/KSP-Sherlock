@@ -324,13 +324,18 @@ export async function runDiagnostics(): Promise<DiagnosticResult> {
       question: 'ping', 
       session_id: getSessionId(), 
       language: 'en' 
-    }, { timeoutMs: 4000, skipAuth: true });
+    }, { timeoutMs: 15000, skipAuth: true });
 
     result.latencyMs = Math.round(performance.now() - startTime);
     result.endpointReachable = true;
     result.jsonValid = json !== null && typeof json === 'object';
   } catch (e: any) {
     result.error = e.message || 'Network exception';
+    // If the server responded with any HTTP status code (e.g. 200, 204, 400), the backend is online and reachable
+    if (e.status && e.status !== 0 && e.status !== 408) {
+      result.endpointReachable = true;
+      result.latencyMs = Math.round(performance.now() - startTime);
+    }
   }
 
   if (IS_DEV) {

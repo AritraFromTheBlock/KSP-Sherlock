@@ -12,6 +12,7 @@ import {
   FileText,
   Search,
   AlertTriangle,
+  Landmark,
   TrendingUp,
   MessageSquare,
   Settings,
@@ -36,6 +37,7 @@ const navItems = [
   { icon: FileText, label: 'Case Summaries', path: '/dashboard/case-summaries' },
   { icon: Search, label: 'Similar Cases', path: '/dashboard/similar-cases' },
   { icon: AlertTriangle, label: 'Early Warning', path: '/dashboard/early-warning' },
+  { icon: Landmark, label: 'Financial Crime', path: '/dashboard/financial-crime' },
   { icon: TrendingUp, label: 'Reports', path: '/dashboard/reports' },
   { icon: MessageSquare, label: 'Conversation History', path: '/dashboard/conversation-history' },
 ];

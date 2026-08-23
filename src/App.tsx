@@ -21,6 +21,7 @@ const OffenderProfiling = lazy(() => import('./pages/OffenderProfiling'));
 const CaseSummaries = lazy(() => import('./pages/CaseSummaries'));
 const SimilarCases = lazy(() => import('./pages/SimilarCases'));
 const EarlyWarning = lazy(() => import('./pages/EarlyWarning'));
+const FinancialCrime = lazy(() => import('./pages/FinancialCrime'));
 const Reports = lazy(() => import('./pages/Reports'));
 const ConversationHistory = lazy(() => import('./pages/ConversationHistory'));
 const Administration = lazy(() => import('./pages/Administration'));
@@ -111,6 +112,11 @@ function App() {
             <Route path="early-warning" element={
               <Suspense fallback={<PageLoader />}>
                 <EarlyWarning />
+              </Suspense>
+            } />
+            <Route path="financial-crime" element={
+              <Suspense fallback={<PageLoader />}>
+                <FinancialCrime />
               </Suspense>
             } />
             <Route path="reports" element={

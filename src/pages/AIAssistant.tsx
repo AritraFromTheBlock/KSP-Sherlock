@@ -123,29 +123,49 @@ function AIAssistantContent() {
 
   // Run initial health checks and diagnostics on startup
   useEffect(() => {
-    const checkBackendHealth = async () => {
+    let isMounted = true;
+
+    const checkBackendHealth = async (retries = 2) => {
       if (!navigator.onLine) {
-        setStatus('offline');
-        setIsCheckingHealth(false);
+        if (isMounted) {
+          setStatus('offline');
+          setIsCheckingHealth(false);
+        }
         return;
       }
 
-      setStatus('checking');
-      try {
-        const diagnostics = await runDiagnostics();
-        if (diagnostics.endpointReachable) {
-          setStatus('connected');
-        } else {
-          setStatus('failed');
+      if (isMounted) setStatus('checking');
+
+      for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+          const diagnostics = await runDiagnostics();
+          if (diagnostics.endpointReachable) {
+            if (isMounted) {
+              setStatus('connected');
+              setIsCheckingHealth(false);
+            }
+            return;
+          }
+        } catch {
+          // Retry on failure
         }
-      } catch (e) {
+
+        if (attempt < retries) {
+          await new Promise((resolve) => setTimeout(resolve, 1500));
+        }
+      }
+
+      if (isMounted) {
         setStatus('failed');
-      } finally {
         setIsCheckingHealth(false);
       }
     };
 
     checkBackendHealth();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Auto-scroll viewport
