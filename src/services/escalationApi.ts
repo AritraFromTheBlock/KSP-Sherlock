@@ -184,15 +184,9 @@ export async function predictEscalationRisk(
 
       if (!response.ok) {
         const errorMsg = data?.error || data?.message || `Server returned status ${response.status}`;
-        return {
-          status: 'error',
-          prediction: 0,
-          risk_probability: 0,
-          error: errorMsg,
-          details: data?.details,
-          latencyMs,
-          timestamp: new Date().toISOString(),
-        };
+        lastError = new Error(errorMsg);
+        console.warn(`[ESCALATION-API] Request to ${url} returned status ${response.status}. Trying next endpoint fallback...`);
+        continue;
       }
 
       return {
@@ -205,7 +199,7 @@ export async function predictEscalationRisk(
     } catch (error: any) {
       clearTimeout(timeoutId);
       lastError = error;
-      console.warn(`Attempt with ${url} failed, checking fallback if available...`, error);
+      console.warn(`[ESCALATION-API] Attempt with ${url} failed, trying next fallback...`, error);
     }
   }
 

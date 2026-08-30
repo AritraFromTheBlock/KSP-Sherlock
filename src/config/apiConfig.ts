@@ -42,7 +42,7 @@ export const MAP_COPILOT_ENDPOINTS = {
 // SYSTEM 3: Escalation Prediction Model (escalation_function — /predict)
 export const ESCALATION_DIRECT_URL = 'https://ksp-sherlock-60077726539.development.catalystserverless.in/server/escalation_function/predict';
 export const ESCALATION_RELATIVE_URL = '/server/escalation_function/predict';
-const escalationEnv = metaEnv.VITE_ESCALATION_ENDPOINT || ESCALATION_RELATIVE_URL;
+const escalationEnv = metaEnv.VITE_ESCALATION_ENDPOINT || (metaEnv.DEV ? ESCALATION_RELATIVE_URL : ESCALATION_DIRECT_URL);
 export const ESCALATION_ENDPOINT = escalationEnv;
 
 export const API_CONFIG = {
