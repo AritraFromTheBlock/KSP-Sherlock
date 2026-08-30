@@ -82,13 +82,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
       {/* Brand Header */}
       <div className="p-6 border-b border-edge flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-abyss border border-edge flex items-center justify-center p-1 relative group">
-            <div className="absolute inset-0 bg-neon/10 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity" />
-            <img src="https://raw.githubusercontent.com/AritraFromTheBlock/KSP-Sherlock/main/public/ksp-logo.svg" alt="KSP Logo" className="w-full h-full object-contain relative z-10" />
-          </div>
+          <img 
+            src="https://raw.githubusercontent.com/AritraFromTheBlock/KSP-Sherlock/main/public/ksp-logo.svg" 
+            alt="KSP Logo" 
+            className="h-10 w-auto object-contain drop-shadow-md" 
+          />
           <div>
             <h1 className="font-display font-bold text-lg text-slate-100 tracking-wider">
-              SHERLOCK
+              KSP <span className="text-neon-glow">SHERLOCK</span>
             </h1>
             <p className="text-[10px] font-mono text-neon uppercase tracking-widest">KSP Intelligence Portal</p>
           </div>

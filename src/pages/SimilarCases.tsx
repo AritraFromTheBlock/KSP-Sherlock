@@ -141,13 +141,53 @@ function CaseCard({
   );
 }
 
+// ── Preset Scenarios for Instant AI Demonstration ───────────────────────────
+const PRESET_SCENARIOS = [
+  {
+    title: '🚗 Vehicle Theft (Bengaluru)',
+    desc: 'Daytime vehicle theft cluster in urban core',
+    crimeTypeID: 9,
+    districtID: 1,
+    hourBucket: 15,
+    victimCount: 1,
+    accusedCount: 1,
+  },
+  {
+    title: '💰 Bank & Online Fraud (Mysuru)',
+    desc: 'Economic fraud pattern with co-accused',
+    crimeTypeID: 17,
+    districtID: 3,
+    hourBucket: 11,
+    victimCount: 1,
+    accusedCount: 2,
+  },
+  {
+    title: '⚔️ Armed Robbery (Kalaburagi)',
+    desc: 'Nighttime high-risk armed incident',
+    crimeTypeID: 7,
+    districtID: 5,
+    hourBucket: 21,
+    victimCount: 2,
+    accusedCount: 3,
+  },
+  {
+    title: '💊 Narcotics Smuggling (Mangaluru)',
+    desc: 'Late-night syndicate trafficking pattern',
+    crimeTypeID: 23,
+    districtID: 8,
+    hourBucket: 2,
+    victimCount: 1,
+    accusedCount: 2,
+  },
+];
+
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function SimilarCases() {
-  const [crimeTypeID, setCrimeTypeID] = useState<number | ''>('');
-  const [districtID,  setDistrictID]  = useState<number | ''>('');
-  const [hourBucket,  setHourBucket]  = useState<number | ''>('');
-  const [victimCount, setVictimCount] = useState<number | ''>('');
-  const [accusedCount,setAccusedCount]= useState<number | ''>('');
+  const [crimeTypeID, setCrimeTypeID] = useState<number | ''>(9);
+  const [districtID,  setDistrictID]  = useState<number | ''>(1);
+  const [hourBucket,  setHourBucket]  = useState<number | ''>(15);
+  const [victimCount, setVictimCount] = useState<number | ''>(1);
+  const [accusedCount,setAccusedCount]= useState<number | ''>(1);
   const [threshold,   setThreshold]   = useState(30);
 
   const [results,   setResults]   = useState<SimilarCase[]>([]);
@@ -156,22 +196,31 @@ export default function SimilarCases() {
   const [selected,  setSelected]  = useState<SimilarCase | null>(null);
   const [loadTime,  setLoadTime]  = useState<number>(0);
 
-  const handleRun = useCallback(async () => {
+  const executeQuery = useCallback(async (params: {
+    crime?: number | '';
+    dist?: number | '';
+    hour?: number | '';
+    v?: number | '';
+    a?: number | '';
+    thresh?: number;
+  }) => {
     setIsLoading(true);
-    setSelected(null);
     setHasRun(true);
     const t0 = performance.now();
 
     const query: QueryParams = {};
-    if (crimeTypeID !== '') query.crimeMinorHeadID = Number(crimeTypeID);
-    if (districtID  !== '') query.districtID       = Number(districtID);
-    if (hourBucket  !== '') query.hour             = Number(hourBucket);
-    if (victimCount !== '') query.victimCount      = Number(victimCount);
-    if (accusedCount!== '') query.accusedCount     = Number(accusedCount);
+    if (params.crime !== '' && params.crime !== undefined) query.crimeMinorHeadID = Number(params.crime);
+    if (params.dist !== '' && params.dist !== undefined) query.districtID = Number(params.dist);
+    if (params.hour !== '' && params.hour !== undefined) query.hour = Number(params.hour);
+    if (params.v !== '' && params.v !== undefined) query.victimCount = Number(params.v);
+    if (params.a !== '' && params.a !== undefined) query.accusedCount = Number(params.a);
 
     try {
-      const res = await findSimilarCases(query, 15, threshold);
+      const res = await findSimilarCases(query, 15, params.thresh ?? 30);
       setResults(res);
+      if (res.length > 0) {
+        setSelected(res[0]);
+      }
       setLoadTime(Math.round(performance.now() - t0));
     } catch (err) {
       console.error('[SIMILAR-CASES] Engine error:', err);
@@ -179,7 +228,39 @@ export default function SimilarCases() {
     } finally {
       setIsLoading(false);
     }
-  }, [crimeTypeID, districtID, hourBucket, victimCount, accusedCount, threshold]);
+  }, []);
+
+  const handleRun = useCallback(() => {
+    executeQuery({
+      crime: crimeTypeID,
+      dist: districtID,
+      hour: hourBucket,
+      v: victimCount,
+      a: accusedCount,
+      thresh: threshold,
+    });
+  }, [crimeTypeID, districtID, hourBucket, victimCount, accusedCount, threshold, executeQuery]);
+
+  // Auto-run default matching on page load
+  React.useEffect(() => {
+    executeQuery({ crime: 9, dist: 1, hour: 15, v: 1, a: 1, thresh: 30 });
+  }, [executeQuery]);
+
+  const applyPreset = (preset: typeof PRESET_SCENARIOS[0]) => {
+    setCrimeTypeID(preset.crimeTypeID);
+    setDistrictID(preset.districtID);
+    setHourBucket(preset.hourBucket);
+    setVictimCount(preset.victimCount);
+    setAccusedCount(preset.accusedCount);
+    executeQuery({
+      crime: preset.crimeTypeID,
+      dist: preset.districtID,
+      hour: preset.hourBucket,
+      v: preset.victimCount,
+      a: preset.accusedCount,
+      thresh: threshold,
+    });
+  };
 
   const handleClear = () => {
     setCrimeTypeID('');
@@ -202,20 +283,21 @@ export default function SimilarCases() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="h-[calc(100vh-4rem)] flex flex-col p-4 sm:p-6 gap-4 overflow-hidden"
+      className="h-[calc(100vh-4rem)] flex flex-col p-4 sm:p-6 gap-3 overflow-hidden"
     >
       {/* Header */}
-      <div className="flex items-center justify-between shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 shrink-0">
         <div>
-          <h1 className="text-2xl font-display font-bold text-slate-200">AI Case Matching</h1>
-          <p className="text-sm text-slate-400 mt-0.5">
-            Multi-signal similarity engine · 10,000 Karnataka FIR records
+          <h1 className="text-2xl font-display font-bold text-slate-200">AI Case Matching Engine</h1>
+          <p className="text-xs text-slate-400 mt-0.5">
+            Multi-vector incident similarity & pattern detection · 10,000 Karnataka FIR dataset
           </p>
         </div>
         <div className="flex items-center gap-2">
           {hasRun && (
-            <span className="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
-              {results.length} matches · {loadTime}ms
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/30 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              {results.length} Matches Found ({loadTime}ms)
             </span>
           )}
           {activeFilters > 0 && (
@@ -227,6 +309,23 @@ export default function SimilarCases() {
             </button>
           )}
         </div>
+      </div>
+
+      {/* Quick Scenario Preset Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 shrink-0 scrollbar-none">
+        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest shrink-0">
+          Incident Presets:
+        </span>
+        {PRESET_SCENARIOS.map((preset, idx) => (
+          <button
+            key={idx}
+            onClick={() => applyPreset(preset)}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono border border-slate-800 bg-slate-900/80 text-slate-300 hover:border-neon/50 hover:bg-slate-800/90 hover:text-neon transition-all shrink-0 cursor-pointer shadow-sm active:scale-95"
+            title={preset.desc}
+          >
+            {preset.title}
+          </button>
+        ))}
       </div>
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 overflow-hidden">

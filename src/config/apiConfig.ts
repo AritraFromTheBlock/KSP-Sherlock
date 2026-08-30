@@ -11,10 +11,14 @@
 
 const metaEnv = (import.meta as any).env || {};
 
-// SYSTEM 1: General AI Assistant (chatbot_function)
-export const ASSISTANT_DIRECT_URL = 'https://ksp-sherlock-60077726539.development.catalystserverless.in/server/chatbot_function';
-export const ASSISTANT_RELATIVE_URL = '/server/chatbot_function';
-const assistantEnv = metaEnv.VITE_ASSISTANT_BASE_URL || ASSISTANT_RELATIVE_URL;
+// SYSTEM 1: General AI Assistant (Render FastAPI /chat)
+const defaultBackend = 'https://ksp-sherlock-ai.onrender.com';
+const backendUrl = metaEnv.VITE_BACKEND_URL || metaEnv.VITE_API_BASE || defaultBackend;
+export const RENDER_BACKEND_URL = backendUrl.replace(/\/$/, '');
+
+export const ASSISTANT_DIRECT_URL = `${RENDER_BACKEND_URL}/chat`;
+export const ASSISTANT_RELATIVE_URL = `${RENDER_BACKEND_URL}/chat`;
+const assistantEnv = metaEnv.VITE_ASSISTANT_BASE_URL || RENDER_BACKEND_URL;
 export const ASSISTANT_BASE_URL = assistantEnv.replace(/\/$/, '');
 
 export const ASSISTANT_ENDPOINT = 
@@ -24,19 +28,14 @@ export const ASSISTANT_ENDPOINT =
 export const DEPLOYED_CATALYST_ENDPOINT = ASSISTANT_ENDPOINT;
 export const CATALYST_ENDPOINT = ASSISTANT_ENDPOINT;
 
-// SYSTEM 2: Hotspot data endpoint (hotspot_function — only exposes /hotspots)
-const mapCopilotEnv = metaEnv.VITE_MAP_COPILOT_ENDPOINT || metaEnv.VITE_API_BASE || 'https://ksp-sherlock-ai.onrender.com';
-export const MAP_COPILOT_BASE_URL = mapCopilotEnv.replace(/\/$/, '');
-
-// The heatmap copilot /chat route lives on chatbot_function (hotspot_function has no /chat).
-// Override with VITE_MAP_COPILOT_CHAT_ENDPOINT if the chat moves to its own function later.
-const mapCopilotChatEnv = metaEnv.VITE_MAP_COPILOT_CHAT_ENDPOINT || ASSISTANT_BASE_URL;
-export const MAP_COPILOT_CHAT_BASE_URL = mapCopilotChatEnv.replace(/\/$/, '');
+// SYSTEM 2: Hotspot data endpoint (FastAPI /hotspots)
+export const MAP_COPILOT_BASE_URL = RENDER_BACKEND_URL;
+export const MAP_COPILOT_CHAT_BASE_URL = RENDER_BACKEND_URL;
 
 export const MAP_COPILOT_ENDPOINTS = {
   HEALTH:   `${MAP_COPILOT_BASE_URL}/health`,
   HOTSPOTS: `${MAP_COPILOT_BASE_URL}/hotspots`,
-  CHAT:     `${MAP_COPILOT_CHAT_BASE_URL}/chat`,  // chatbot_function, not hotspot_function
+  CHAT:     `${MAP_COPILOT_CHAT_BASE_URL}/chat`,
 };
 
 // SYSTEM 3: Escalation Prediction Model (escalation_function — /predict)

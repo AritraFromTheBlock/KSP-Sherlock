@@ -320,21 +320,29 @@ export async function runDiagnostics(): Promise<DiagnosticResult> {
   const startTime = performance.now();
 
   try {
-    const json = await apiClient.post(API_CONFIG.ASSISTANT_ENDPOINT, { 
-      question: 'ping', 
-      session_id: getSessionId(), 
-      language: 'en' 
-    }, { timeoutMs: 15000, skipAuth: true });
+    const healthUrl = `${API_CONFIG.ASSISTANT_BASE_URL}/health`;
+    const json = await apiClient.get(healthUrl, { timeoutMs: 10000, skipAuth: true });
 
     result.latencyMs = Math.round(performance.now() - startTime);
     result.endpointReachable = true;
     result.jsonValid = json !== null && typeof json === 'object';
   } catch (e: any) {
-    result.error = e.message || 'Network exception';
-    // If the server responded with any HTTP status code (e.g. 200, 204, 400), the backend is online and reachable
-    if (e.status && e.status !== 0 && e.status !== 408) {
-      result.endpointReachable = true;
+    // Fallback: try posting ping to /chat
+    try {
+      const json = await apiClient.post(API_CONFIG.ASSISTANT_ENDPOINT, { 
+        question: 'ping', 
+        session_id: getSessionId(), 
+        language: 'en' 
+      }, { timeoutMs: 10000, skipAuth: true });
       result.latencyMs = Math.round(performance.now() - startTime);
+      result.endpointReachable = true;
+      result.jsonValid = json !== null && typeof json === 'object';
+    } catch (err: any) {
+      result.error = err.message || 'Network exception';
+      if (err.status && err.status !== 0 && err.status !== 408) {
+        result.endpointReachable = true;
+        result.latencyMs = Math.round(performance.now() - startTime);
+      }
     }
   }
 

@@ -170,29 +170,43 @@ export interface SimilarCase {
   crimeCategory: string;
 }
 
-// ── Dataset loader (cached) ───────────────────────────────────────────────────
-let _cachedDataset: FactCase[] | null = null;
+import crimeGraphData from '../data/crimeGraphDataset.json';
 
-function parseCSV(text: string): FactCase[] {
-  const lines = text.trim().split('\n');
-  const headers = lines[0].split(',');
-  return lines.slice(1).map(line => {
-    const vals = line.split(',');
-    const row: any = {};
-    headers.forEach((h, i) => {
-      const v = vals[i]?.trim();
-      row[h.trim()] = isNaN(Number(v)) ? v : Number(v);
-    });
-    return row as FactCase;
-  }).filter(r => !isNaN(r.CaseMasterID));
-}
+// ── Dataset loader (cached in-memory) ─────────────────────────────────────────
+let _cachedDataset: FactCase[] | null = null;
 
 export async function loadFactCases(): Promise<FactCase[]> {
   if (_cachedDataset) return _cachedDataset;
-  const res = await fetch('./data/fact_cases.csv');
-  const text = await res.text();
-  _cachedDataset = parseCSV(text);
-  return _cachedDataset;
+
+  const rawCases = (crimeGraphData as any).cases || [];
+  const parsed: FactCase[] = rawCases.map((c: any) => ({
+    CaseMasterID: Number(c.CaseMasterID || 0),
+    CrimeNo: String(c.CrimeNo || `FIR-${c.CaseMasterID}`),
+    CrimeRegisteredDate: String(c.CrimeRegisteredDate || '2026-03-15'),
+    Year: Number(c.Year || 2026),
+    Month: Number(c.Month || 3),
+    DayOfWeek: String(c.DayOfWeek || 'Wednesday'),
+    Hour: Number(c.Hour || 14),
+    DistrictID: Number(c.DistrictID || 1),
+    latitude: Number(c.latitude || 12.9716),
+    longitude: Number(c.longitude || 77.5946),
+    CrimeMajorHeadID: Number(c.CrimeMajorHeadID || 1),
+    CrimeMinorHeadID: Number(c.CrimeMinorHeadID || 1),
+    GravityOffenceID: Number(c.GravityOffenceID || 1),
+    CaseStatusID: Number(c.CaseStatusID || 1),
+    ComplainantAge: Number(c.ComplainantAge || 35),
+    ComplainantGender: String(c.ComplainantGender || 'M'),
+    OccupationID: Number(c.OccupationID || 1),
+    SocioEconomicIndex: Number(c.SocioEconomicIndex || 1),
+    VictimCount: Number(c.VictimCount || 1),
+    AccusedCount: Number(c.AccusedCount || 1),
+    ArrestCount: Number(c.ArrestCount || 0),
+    HasRepeatOffender: Number(c.HasRepeatOffender || 0),
+    HighRisk: Number(c.HighRisk || 0),
+  }));
+
+  _cachedDataset = parsed;
+  return parsed;
 }
 
 // ── Weights ──────────────────────────────────────────────────────────────────
