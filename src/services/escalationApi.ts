@@ -29,33 +29,33 @@ export interface GravityLevel {
 export const GRAVITY_LEVELS: GravityLevel[] = [
   {
     id: 1,
-    label: 'Level 1 - Minor / Petty Infraction',
-    description: 'Petty theft, public nuisance, simple trespassing, disorderly conduct',
-    badgeColor: 'text-slate-300 border-slate-600 bg-slate-800/50',
+    label: 'Level 1 - Heinous Offense',
+    description: 'Homicide, organized crime syndicate, kidnapping for ransom, armed trafficking',
+    badgeColor: 'text-rose-400 border-rose-500/40 bg-rose-500/10',
   },
   {
     id: 2,
-    label: 'Level 2 - Moderate Misdemeanor',
-    description: 'Simple assault, minor vandalism, verbal extortion, cyber bullying',
-    badgeColor: 'text-blue-400 border-blue-500/40 bg-blue-500/10',
+    label: 'Level 2 - Severe / Major',
+    description: 'Aggravated assault with weapon, armed robbery, extortion ring, cyber heist',
+    badgeColor: 'text-orange-400 border-orange-500/40 bg-orange-500/10',
   },
   {
     id: 3,
-    label: 'Level 3 - Serious Offense',
+    label: 'Level 3 - Moderate',
     description: 'Residential burglary, commercial fraud, narcotics possession, auto theft',
     badgeColor: 'text-amber-400 border-amber-500/40 bg-amber-500/10',
   },
   {
     id: 4,
-    label: 'Level 4 - Severe Felony',
-    description: 'Aggravated assault with weapon, armed robbery, extortion ring, cyber heist',
-    badgeColor: 'text-orange-400 border-orange-500/40 bg-orange-500/10',
+    label: 'Level 4 - Minor',
+    description: 'Simple assault, minor vandalism, verbal extortion, cyber bullying',
+    badgeColor: 'text-blue-400 border-blue-500/40 bg-blue-500/10',
   },
   {
     id: 5,
-    label: 'Level 5 - Heinous Offense',
-    description: 'Homicide, organized crime syndicate, kidnapping for ransom, armed trafficking',
-    badgeColor: 'text-rose-400 border-rose-500/40 bg-rose-500/10',
+    label: 'Level 5 - Petty Infraction',
+    description: 'Petty theft, public nuisance, simple trespassing, disorderly conduct',
+    badgeColor: 'text-slate-300 border-slate-600 bg-slate-800/50',
   },
 ];
 
@@ -232,7 +232,7 @@ function calculateInferenceFallback(payload: EscalationRequest): { prediction: 0
     accused_has_other_victims,
   } = payload;
 
-  // GravityOffenceID === 1 represents low-severity baseline infraction with high escalation velocity risk
+  // GravityOffenceID === 1 represents Level 1 (Heinous Offense) with highest risk and escalation propensity
   if (GravityOffenceID === 1) {
     let baseRisk = 0.945;
 
