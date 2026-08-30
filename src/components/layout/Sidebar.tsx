@@ -32,11 +32,11 @@ const navItems = [
   { icon: FolderSearch, label: 'FIR Search', path: '/dashboard/fir-search' },
   { icon: Users, label: 'Criminal Network', path: '/dashboard/criminal-network' },
   { icon: MapPin, label: 'Crime Heatmap', path: '/dashboard/crime-heatmap' },
+  { icon: AlertTriangle, label: 'Early Warning', path: '/dashboard/early-warning' },
   { icon: BarChart3, label: 'Crime Analytics', path: '/dashboard/crime-analytics' },
   { icon: Brain, label: 'Offender Profiling', path: '/dashboard/offender-profiling' },
   { icon: FileText, label: 'Case Summaries', path: '/dashboard/case-summaries' },
   { icon: Search, label: 'Similar Cases', path: '/dashboard/similar-cases' },
-  { icon: AlertTriangle, label: 'Early Warning', path: '/dashboard/early-warning' },
   { icon: Landmark, label: 'Financial Crime', path: '/dashboard/financial-crime' },
   { icon: TrendingUp, label: 'Reports', path: '/dashboard/reports' },
   { icon: MessageSquare, label: 'Conversation History', path: '/dashboard/conversation-history' },
@@ -87,8 +87,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
             <img src="https://raw.githubusercontent.com/AritraFromTheBlock/KSP-Sherlock/main/public/ksp-logo.svg" alt="KSP Logo" className="w-full h-full object-contain relative z-10" />
           </div>
           <div>
-            <h1 className="font-display font-bold text-lg text-slate-100 tracking-wider flex items-center gap-1.5">
-              SHERLOCK <ShieldAlert className="w-4 h-4 text-neon-bright inline" />
+            <h1 className="font-display font-bold text-lg text-slate-100 tracking-wider">
+              SHERLOCK
             </h1>
             <p className="text-[10px] font-mono text-neon uppercase tracking-widest">KSP Intelligence Portal</p>
           </div>

@@ -49,7 +49,28 @@ export default function CrimeHeatmap() {
     }
   ]);
   const [isChatLoading, setIsChatLoading] = useState(false);
+  const [chatThinkingIndex, setChatThinkingIndex] = useState(0);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const COPILOT_THINKING_STEPS = [
+    'Analyzing...',
+    'Thinking...',
+    'Brainstorming...',
+    'Reasoning...',
+    'Correlating...',
+    'Synthesizing...'
+  ];
+
+  useEffect(() => {
+    if (!isChatLoading) {
+      setChatThinkingIndex(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setChatThinkingIndex((prev) => (prev + 1) % COPILOT_THINKING_STEPS.length);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, [isChatLoading]);
 
   // Subscribe to the global reactive state store
   const [storeState, setStoreState] = useState(selectedHotspotStore.getState());
@@ -548,7 +569,9 @@ export default function CrimeHeatmap() {
                 <div className="flex justify-start">
                   <div className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-slate-400 flex items-center gap-2">
                     <Cpu className="w-3.5 h-3.5 animate-spin text-neon-bright" />
-                    <span>Analyzing directive...</span>
+                    <span className="text-neon font-medium transition-all">
+                      {COPILOT_THINKING_STEPS[chatThinkingIndex % COPILOT_THINKING_STEPS.length]}
+                    </span>
                   </div>
                 </div>
               )}

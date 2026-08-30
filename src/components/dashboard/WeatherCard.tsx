@@ -10,8 +10,14 @@ interface WeatherData {
 }
 
 export const WeatherCard: React.FC = () => {
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [weather, setWeather] = useState<WeatherData>({
+    temp: 24,
+    humidity: 68,
+    windSpeed: 12,
+    condition: 'Partly Cloudy',
+    code: 2,
+  });
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
   const fetchWeather = async () => {

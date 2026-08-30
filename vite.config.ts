@@ -5,7 +5,19 @@ export default defineConfig({
   base: './',
   plugins: [react()],
   server: {
-    allowedHosts: true
+    allowedHosts: true,
+    proxy: {
+      '/server/escalation_function': {
+        target: 'https://ksp-sherlock-60077726539.development.catalystserverless.in',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/server/chatbot_function': {
+        target: 'https://ksp-sherlock-60077726539.development.catalystserverless.in',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   optimizeDeps: {
     include: ['react-is']

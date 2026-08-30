@@ -65,23 +65,26 @@ const TYPE_CONFIG = {
 };
 
 export const AIIntelligenceBriefing: React.FC = () => {
-  const [data, setData] = useState<IntelligenceData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<IntelligenceData>(FALLBACK_DATA);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchIntelligence = async () => {
       try {
         const jsonData = await apiClient.get(`${API_CONFIG.MAP_COPILOT_BASE_URL}/intelligence-summary`);
-        setData(jsonData);
-      } catch (error) {
-        console.warn('Backend unavailable or endpoint not configured, falling back to cached intelligence data.', error);
-        setData(FALLBACK_DATA);
-      } finally {
-        setLoading(false);
+        if (isMounted && jsonData && jsonData.narrativeHtml) {
+          setData(jsonData);
+        }
+      } catch {
+        // Silently keep static intelligence data
       }
     };
 
     fetchIntelligence();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (

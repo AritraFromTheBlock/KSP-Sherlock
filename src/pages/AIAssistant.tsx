@@ -74,6 +74,22 @@ function renderMarkdown(text: string): React.ReactNode {
 type Lang = 'en' | 'kn';
 type ConnectionStatus = 'connected' | 'checking' | 'failed' | 'offline';
 
+const THINKING_STEPS_EN = [
+  'Analyzing...',
+  'Thinking...',
+  'Brainstorming...',
+  'Reasoning...',
+  'Correlating...',
+  'Synthesizing...'
+];
+
+const THINKING_STEPS_KN = [
+  'ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...',
+  'ಯೋಚಿಸಲಾಗುತ್ತಿದೆ...',
+  'ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...',
+  'ಸಂಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...'
+];
+
 function AIAssistantContent() {
   const { currentUser } = useAuth();
   const location = useLocation();
@@ -95,9 +111,22 @@ function AIAssistantContent() {
   const [sessionId, setSessionId] = useState<string>(initialSession?.id || `session-${Date.now()}`);
   
   const [isLoading, setIsLoading] = useState(false);
+  const [thinkingIndex, setThinkingIndex] = useState(0);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [status, setStatus] = useState<ConnectionStatus>('checking');
-  const [isCheckingHealth, setIsCheckingHealth] = useState(true);
+  const [status, setStatus] = useState<ConnectionStatus>(navigator.onLine ? 'connected' : 'offline');
+  const [isCheckingHealth, setIsCheckingHealth] = useState(false);
+
+  // Cycle thinking phrases while loading
+  useEffect(() => {
+    if (!isLoading) {
+      setThinkingIndex(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setThinkingIndex((prev) => (prev + 1) % THINKING_STEPS_EN.length);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -121,43 +150,27 @@ function AIAssistantContent() {
     };
   }, []);
 
-  // Run initial health checks and diagnostics on startup
+  // Run background health checks and diagnostics on startup
   useEffect(() => {
     let isMounted = true;
 
-    const checkBackendHealth = async (retries = 2) => {
+    const checkBackendHealth = async () => {
       if (!navigator.onLine) {
         if (isMounted) {
           setStatus('offline');
-          setIsCheckingHealth(false);
         }
         return;
       }
 
-      if (isMounted) setStatus('checking');
-
-      for (let attempt = 0; attempt <= retries; attempt++) {
-        try {
-          const diagnostics = await runDiagnostics();
+      try {
+        const diagnostics = await runDiagnostics();
+        if (isMounted) {
           if (diagnostics.endpointReachable) {
-            if (isMounted) {
-              setStatus('connected');
-              setIsCheckingHealth(false);
-            }
-            return;
+            setStatus('connected');
           }
-        } catch {
-          // Retry on failure
         }
-
-        if (attempt < retries) {
-          await new Promise((resolve) => setTimeout(resolve, 1500));
-        }
-      }
-
-      if (isMounted) {
-        setStatus('failed');
-        setIsCheckingHealth(false);
+      } catch {
+        // Keep current online status gracefully
       }
     };
 
@@ -762,9 +775,20 @@ function AIAssistantContent() {
                         <div className="h-2 w-2 rounded-full bg-neon-bright animate-bounce" style={{ animationDelay: '150ms' }} />
                         <div className="h-2 w-2 rounded-full bg-neon-bright animate-bounce" style={{ animationDelay: '300ms' }} />
                       </div>
-                      <span className="font-mono text-xs text-slate-400">
-                        {current.typingIndicator}
-                      </span>
+                      <AnimatePresence mode="wait">
+                        <motion.span
+                          key={thinkingIndex}
+                          initial={{ opacity: 0, y: 3 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -3 }}
+                          transition={{ duration: 0.2 }}
+                          className="font-mono text-xs text-neon font-medium"
+                        >
+                          {language === 'kn'
+                            ? THINKING_STEPS_KN[thinkingIndex % THINKING_STEPS_KN.length]
+                            : THINKING_STEPS_EN[thinkingIndex % THINKING_STEPS_EN.length]}
+                        </motion.span>
+                      </AnimatePresence>
                     </div>
                   </div>
                 </div>

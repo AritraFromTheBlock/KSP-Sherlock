@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { FileText, Download, Filter, Loader2, CheckCircle2 } from 'lucide-react'
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FileText, Download, Filter, Loader2, CheckCircle2 } from 'lucide-react';
+import { jsPDF } from 'jspdf';
 
 interface Report {
   id: string;
@@ -54,17 +55,187 @@ export default function Reports() {
   };
 
   const handleDownload = (report: Report) => {
-    // Generate a mock secure file download
-    const content = `KSP SHERLOCK - SECURE INTELLIGENCE REPORT\n\nTitle: ${report.name}\nGenerated: ${report.date}\nJurisdiction: ${jurisdiction}\n\n[ENCRYPTED NEURAL ENGINE DATA...]\n\n---\nEND OF REPORT`;
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${report.name.replace(/[^a-zA-Z0-9_-]/g, '_')}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    // 1. Top Header Banner
+    doc.setFillColor(15, 23, 42); // #0f172a
+    doc.rect(0, 0, pageWidth, 28, 'F');
+
+    // Accent line
+    doc.setFillColor(0, 240, 255); // cyan accent
+    doc.rect(0, 28, pageWidth, 1.5, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.text('KARNATAKA STATE POLICE', 14, 12);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(148, 163, 184); // slate-400
+    doc.text('SHERLOCK INTELLIGENCE & CRIME ANALYTICS PLATFORM', 14, 18);
+    doc.text('CONFIDENTIAL // LAW ENFORCEMENT OPERATIONAL REPORT', 14, 23);
+
+    // 2. Report Title & Metadata Box
+    doc.setFontSize(15);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text(report.name, 14, 40);
+
+    // Metadata Box
+    doc.setFillColor(241, 245, 249);
+    doc.setDrawColor(203, 213, 225);
+    doc.roundedRect(14, 45, pageWidth - 28, 28, 2, 2, 'FD');
+
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(71, 85, 105);
+
+    doc.text('REPORT ID:', 18, 53);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(15, 23, 42);
+    doc.text(`KSP-REP-${report.id.slice(-6)}`, 45, 53);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(71, 85, 105);
+    doc.text('GENERATED ON:', 18, 60);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(15, 23, 42);
+    doc.text(report.date, 48, 60);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(71, 85, 105);
+    doc.text('JURISDICTION:', 18, 67);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(15, 23, 42);
+    doc.text(jurisdiction || 'Statewide', 48, 67);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(71, 85, 105);
+    doc.text('SECURITY LEVEL:', 115, 53);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(185, 28, 28); // red
+    doc.text('OFFICIAL / RESTRICTED', 148, 53);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(71, 85, 105);
+    doc.text('AUDIT TOKEN:', 115, 60);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(15, 23, 42);
+    doc.text('AUTH-KSP-99021', 145, 60);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(71, 85, 105);
+    doc.text('DISPATCH UNIT:', 115, 67);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(15, 23, 42);
+    doc.text('Bengaluru Central Command', 148, 67);
+
+    // 3. Section 1: Executive Summary
+    let yPos = 83;
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('1. EXECUTIVE SUMMARY & SITUATIONAL ASSESSMENT', 14, yPos);
+
+    yPos += 6;
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(51, 65, 85);
+    const summaryText = `This report provides an automated operational synthesis of registered crime incidents, spatial clustering densities, and suspect recidivism trends. Based on neural pattern matching, property offenses and cyber financial fraud patterns represent the primary risk drivers in the evaluated sector. Night patrol units and station investigation officers are instructed to maintain targeted surveillance in accordance with the attached action directives.`;
+    const splitSummary = doc.splitTextToSize(summaryText, pageWidth - 28);
+    doc.text(splitSummary, 14, yPos);
+
+    // 4. Section 2: Threat Breakdown Table
+    yPos += splitSummary.length * 4.5 + 7;
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('2. CATEGORICAL INCIDENT & THREAT METRICS', 14, yPos);
+
+    yPos += 5;
+    doc.setFillColor(226, 232, 240); // table header
+    doc.rect(14, yPos, pageWidth - 28, 6.5, 'F');
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(30, 41, 59);
+    doc.text('CRIME CATEGORY', 18, yPos + 4.5);
+    doc.text('INCIDENTS', 88, yPos + 4.5);
+    doc.text('TREND (VS PREV CYCLE)', 122, yPos + 4.5);
+    doc.text('RISK STATUS', 168, yPos + 4.5);
+
+    const tableData = [
+      { cat: 'Property Offenses (Theft/Burglary)', count: '142', trend: '+6.2% Elevation', status: 'ELEVATED' },
+      { cat: 'Cyber Financial & UPI Fraud', count: '89', trend: '+18.4% Spike', status: 'CRITICAL' },
+      { cat: 'Violent Crimes & Assault', count: '34', trend: '-2.1% Stable', status: 'CONTROLLED' },
+      { cat: 'Narcotics & Illicit Substances', count: '21', trend: '+1.5% Normal', status: 'MONITORED' },
+      { cat: 'Vehicular & Traffic Violations', count: '215', trend: '+4.0% Active', status: 'ROUTINE' },
+    ];
+
+    yPos += 6.5;
+    tableData.forEach((row, i) => {
+      if (i % 2 === 1) {
+        doc.setFillColor(248, 250, 252);
+        doc.rect(14, yPos, pageWidth - 28, 6.5, 'F');
+      }
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(51, 65, 85);
+      doc.text(row.cat, 18, yPos + 4.5);
+      doc.text(row.count, 88, yPos + 4.5);
+      doc.text(row.trend, 122, yPos + 4.5);
+
+      if (row.status === 'CRITICAL' || row.status === 'ELEVATED') {
+        doc.setTextColor(185, 28, 28);
+        doc.setFont('helvetica', 'bold');
+      } else {
+        doc.setTextColor(16, 185, 129);
+      }
+      doc.text(row.status, 168, yPos + 4.5);
+      yPos += 6.5;
+    });
+
+    // 5. Section 3: Operational Directives
+    yPos += 7;
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('3. OPERATIONAL DIRECTIVES & PATROL PROTOCOL', 14, yPos);
+
+    yPos += 6;
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(51, 65, 85);
+    const directives = [
+      '• Intensify PCR vehicle patrolling along identified nocturnal hotspot corridors between 22:00 and 04:00.',
+      '• Accelerate Section 151 CrPC preventive detention reviews for repeat offenders with active bail status.',
+      '• Coordinate with Cyber Crime Cell for immediate freezing of flagged mule accounts and phishing SIM cards.',
+      '• Ensure CCTV/ANPR camera network feeds at primary intersection checkpoints are active and calibrated.'
+    ];
+    directives.forEach(dir => {
+      doc.text(dir, 14, yPos);
+      yPos += 5;
+    });
+
+    // 6. Sign-off & Verification Footer
+    yPos = 268;
+    doc.setDrawColor(203, 213, 225);
+    doc.line(14, yPos, pageWidth - 14, yPos);
+
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text('CONFIDENTIAL - KARNATAKA STATE POLICE INTERNAL INTELLIGENCE REPORT', 14, yPos + 5);
+    doc.text(`Digital Verification Hash: SHA256-${Date.now().toString(16).toUpperCase()} | Page 1 of 1`, 14, yPos + 9);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('VERIFIED BY:', 150, yPos + 5);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Command Officer, KSP Hub', 150, yPos + 9);
+
+    // Save as PDF file
+    doc.save(`${report.name.replace(/[^a-zA-Z0-9_-]/g, '_')}.pdf`);
   };
 
   return (
@@ -188,7 +359,7 @@ export default function Reports() {
                           <span className="text-[9px] uppercase tracking-wider font-bold bg-neon text-void px-1.5 py-0.5 rounded-sm">New</span>
                         )}
                       </h4>
-                      <p className="text-xs text-slate-500 font-mono mt-0.5">{report.date} &middot; Encrypted TXT &middot; {report.size}</p>
+                      <p className="text-xs text-slate-500 font-mono mt-0.5">{report.date} &middot; Official PDF &middot; {report.size}</p>
                     </div>
                   </div>
                   <button 
