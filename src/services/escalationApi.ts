@@ -1,4 +1,4 @@
-import { ESCALATION_ENDPOINT, ESCALATION_DIRECT_URL } from '../config/apiConfig';
+import { ESCALATION_ENDPOINT, ESCALATION_DIRECT_URL, ESCALATION_RELATIVE_URL } from '../config/apiConfig';
 
 export interface EscalationRequest {
   incident_number: number;
@@ -150,7 +150,13 @@ export async function predictEscalationRisk(
     accused_has_other_victims: formData.accused_has_other_victims === 1 ? 1 : 0,
   };
 
-  const urlsToTry = [ESCALATION_ENDPOINT];
+  const urlsToTry: string[] = [];
+  if (ESCALATION_ENDPOINT && !urlsToTry.includes(ESCALATION_ENDPOINT)) {
+    urlsToTry.push(ESCALATION_ENDPOINT);
+  }
+  if (ESCALATION_RELATIVE_URL && !urlsToTry.includes(ESCALATION_RELATIVE_URL)) {
+    urlsToTry.push(ESCALATION_RELATIVE_URL);
+  }
   if (ESCALATION_DIRECT_URL && !urlsToTry.includes(ESCALATION_DIRECT_URL)) {
     urlsToTry.push(ESCALATION_DIRECT_URL);
   }

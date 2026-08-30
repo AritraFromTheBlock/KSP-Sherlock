@@ -13,7 +13,8 @@ const metaEnv = (import.meta as any).env || {};
 
 // SYSTEM 1: General AI Assistant (chatbot_function)
 export const ASSISTANT_DIRECT_URL = 'https://ksp-sherlock-60077726539.development.catalystserverless.in/server/chatbot_function';
-const assistantEnv = metaEnv.VITE_ASSISTANT_BASE_URL || (metaEnv.DEV ? '/server/chatbot_function' : ASSISTANT_DIRECT_URL);
+export const ASSISTANT_RELATIVE_URL = '/server/chatbot_function';
+const assistantEnv = metaEnv.VITE_ASSISTANT_BASE_URL || ASSISTANT_RELATIVE_URL;
 export const ASSISTANT_BASE_URL = assistantEnv.replace(/\/$/, '');
 
 export const ASSISTANT_ENDPOINT = 
@@ -40,7 +41,8 @@ export const MAP_COPILOT_ENDPOINTS = {
 
 // SYSTEM 3: Escalation Prediction Model (escalation_function — /predict)
 export const ESCALATION_DIRECT_URL = 'https://ksp-sherlock-60077726539.development.catalystserverless.in/server/escalation_function/predict';
-const escalationEnv = metaEnv.VITE_ESCALATION_ENDPOINT || (metaEnv.DEV ? '/server/escalation_function/predict' : ESCALATION_DIRECT_URL);
+export const ESCALATION_RELATIVE_URL = '/server/escalation_function/predict';
+const escalationEnv = metaEnv.VITE_ESCALATION_ENDPOINT || ESCALATION_RELATIVE_URL;
 export const ESCALATION_ENDPOINT = escalationEnv;
 
 export const API_CONFIG = {
