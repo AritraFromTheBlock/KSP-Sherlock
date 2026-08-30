@@ -59,6 +59,22 @@ export default function LandingPage() {
               </p>
             </div>
           </div>
+
+          {/* Top Right Auth Action Buttons */}
+          <div className="flex items-center gap-2.5">
+            <Link
+              to="/auth?mode=signin"
+              className="px-4 py-2 rounded-xl text-xs font-mono font-semibold uppercase tracking-wider text-slate-300 hover:text-neon-bright hover:bg-slate-800/80 border border-slate-800/80 hover:border-neon/40 transition-all cursor-pointer shadow-sm active:scale-95"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/auth?mode=signup"
+              className="px-4.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-neon-dim via-neon to-neon-bright hover:scale-105 active:scale-95 shadow-neon-sm hover:shadow-neon transition-all cursor-pointer"
+            >
+              Sign Up
+            </Link>
+          </div>
         </div>
       </header>
 
