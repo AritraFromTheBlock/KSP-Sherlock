@@ -44,12 +44,25 @@ export const ESCALATION_RELATIVE_URL = '/server/escalation_function/predict';
 const escalationEnv = metaEnv.VITE_ESCALATION_ENDPOINT || (metaEnv.DEV ? ESCALATION_RELATIVE_URL : ESCALATION_DIRECT_URL);
 export const ESCALATION_ENDPOINT = escalationEnv;
 
+// SYSTEM 4: Mystery Solver Backend (Railway)
+const defaultMysterySolver = 'https://ksp-sherlock-api-production.up.railway.app';
+const mysterySolverUrl = metaEnv.VITE_MYSTERY_SOLVER_URL || defaultMysterySolver;
+export const MYSTERY_SOLVER_BASE_URL = mysterySolverUrl.replace(/\/$/, '');
+
+export const MYSTERY_SOLVER_ENDPOINTS = {
+  CHAT: `${MYSTERY_SOLVER_BASE_URL}/chat`,
+  SERIES: `${MYSTERY_SOLVER_BASE_URL}/series`,
+  SERIES_FOR_CASE: (caseId: string | number) => `${MYSTERY_SOLVER_BASE_URL}/series-for-case?case_id=${caseId}`,
+  ADD_CASE: `${MYSTERY_SOLVER_BASE_URL}/add-case`,
+};
+
 export const API_CONFIG = {
   ASSISTANT_BASE_URL:    ASSISTANT_BASE_URL,
   ASSISTANT_ENDPOINT:    ASSISTANT_ENDPOINT,
   CATALYST_ENDPOINT:     ASSISTANT_ENDPOINT,
   MAP_COPILOT_BASE_URL:  MAP_COPILOT_BASE_URL,
   ESCALATION_ENDPOINT:   ESCALATION_ENDPOINT,
+  MYSTERY_SOLVER_BASE_URL: MYSTERY_SOLVER_BASE_URL,
   TIMEOUT_MS: 120000, // 120 seconds network timeout
   MAX_RETRIES: 1,    // Maximum number of network retries
 };

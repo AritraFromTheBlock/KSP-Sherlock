@@ -13,6 +13,7 @@ import VerifyPage from './pages/OtpPage' // Using existing OtpPage component as 
 // Lazy load dashboard pages
 const DashboardHome = lazy(() => import('./pages/DashboardHome'));
 const AIAssistant = lazy(() => import('./pages/AIAssistant'));
+const MysterySolver = lazy(() => import('./pages/MysterySolver'));
 const FIRSearch = lazy(() => import('./pages/FIRSearch'));
 const CriminalNetwork = lazy(() => import('./pages/CriminalNetwork'));
 const CrimeHeatmap = lazy(() => import('./pages/CrimeHeatmap'));
@@ -72,6 +73,11 @@ function App() {
             <Route path="ai-assistant" element={
               <Suspense fallback={<PageLoader />}>
                 <AIAssistant />
+              </Suspense>
+            } />
+            <Route path="mystery-solver" element={
+              <Suspense fallback={<PageLoader />}>
+                <MysterySolver />
               </Suspense>
             } />
             <Route path="fir-search" element={

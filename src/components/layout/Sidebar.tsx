@@ -29,6 +29,7 @@ interface SidebarProps {
 const navItems = [
   { icon: Home, label: 'Dashboard', path: '/dashboard' },
   { icon: Bot, label: 'AI Assistant', path: '/dashboard/ai-assistant' },
+  { icon: Search, label: 'Mystery Solver', path: '/dashboard/mystery-solver' },
   { icon: FolderSearch, label: 'FIR Search', path: '/dashboard/fir-search' },
   { icon: Users, label: 'Criminal Network', path: '/dashboard/criminal-network' },
   { icon: MapPin, label: 'Crime Heatmap', path: '/dashboard/crime-heatmap' },
