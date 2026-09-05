@@ -99,37 +99,37 @@ export default function LoginPage() {
   const displayError = localError || authError
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-10 font-body">
+    <div className="relative flex h-screen max-h-screen w-full items-center justify-center overflow-hidden px-4 py-2 font-body">
       <AnimatedBackground />
 
       <Link
         to="/"
-        className="absolute left-4 top-4 z-50 flex items-center gap-2 rounded-lg border border-neon/30 bg-panel/40 px-4 py-2 font-mono text-xs uppercase tracking-wider text-slate-300 backdrop-blur-md transition-all hover:border-neon hover:bg-neon/10 hover:text-neon-bright sm:left-6 sm:top-6"
+        className="absolute left-4 top-4 z-50 flex items-center gap-2 rounded-lg border border-neon/30 bg-panel/40 px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider text-slate-300 backdrop-blur-md transition-all hover:border-neon hover:bg-neon/10 hover:text-neon-bright sm:left-6 sm:top-6"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-3.5 w-3.5" />
         Back
       </Link>
 
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="relative z-10 w-full max-w-md"
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="relative z-10 w-full max-w-md my-auto"
       >
         {/* Header: badge + branding */}
         <motion.div
-          initial={{ opacity: 0, y: -12 }}
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-6 flex flex-col items-center text-center"
+          transition={{ duration: 0.4, delay: 0.05 }}
+          className="mb-2.5 flex flex-col items-center text-center"
         >
-          <img src="https://raw.githubusercontent.com/AritraFromTheBlock/KSP-Sherlock/main/public/ksp-logo.svg" alt="Karnataka State Police" className="h-24 w-auto drop-shadow-md mb-2" />
-          <div className="mt-2 flex items-center gap-2">
-            <h1 className="font-display text-2xl font-bold tracking-wide text-slate-200">
+          <img src="https://raw.githubusercontent.com/AritraFromTheBlock/KSP-Sherlock/main/public/ksp-logo.svg" alt="Karnataka State Police" className="h-12 w-auto drop-shadow-md mb-1" />
+          <div className="flex items-center gap-1.5">
+            <h1 className="font-display text-xl font-bold tracking-wide text-slate-200">
               KSP <span className="text-neon-bright">SHERLOCK</span>
             </h1>
           </div>
-          <p className="mt-1 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-slate-400">
+          <p className="mt-0.5 flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-400">
             <ScanLine className="h-3 w-3 text-neon-glow" />
             Karnataka State Police &middot; AI Crime Analytics
           </p>
@@ -137,10 +137,10 @@ export default function LoginPage() {
 
         {/* Glassmorphism card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
+          initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="relative z-20 rounded-2xl border border-neon/20 bg-panel/60 p-7 shadow-neon-lg backdrop-blur-xl sm:p-8"
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="relative z-20 rounded-2xl border border-neon/20 bg-panel/60 p-5 shadow-neon-lg backdrop-blur-xl sm:p-6"
         >
           {/* Corner accents for an instrument-panel feel */}
           <span className="absolute left-3 top-3 h-3 w-3 border-l-2 border-t-2 border-neon-glow/60" />
@@ -148,18 +148,18 @@ export default function LoginPage() {
           <span className="absolute bottom-3 left-3 h-3 w-3 border-b-2 border-l-2 border-neon-glow/60" />
           <span className="absolute bottom-3 right-3 h-3 w-3 border-b-2 border-r-2 border-neon-glow/60" />
 
-          <div className="mb-6 flex items-center justify-between">
-            <span className="font-mono text-[11px] uppercase tracking-widest text-slate-400">
+          <div className="mb-2.5 flex items-center justify-between">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-slate-400">
               {isSignUp ? 'Officer Registration Terminal' : 'Secure Access Terminal'}
             </span>
-            <span className={`flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[10px] ${isSignUp ? 'border-amber-500/30 bg-amber-500/10 text-amber-500' : 'border-neon/30 bg-neon/10 text-neon-bright'}`}>
+            <span className={`flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[9px] ${isSignUp ? 'border-amber-500/30 bg-amber-500/10 text-amber-500' : 'border-neon/30 bg-neon/10 text-neon-bright'}`}>
               <span className={`h-1.5 w-1.5 animate-pulseGlow rounded-full ${isSignUp ? 'bg-amber-500' : 'bg-neon-glow'}`} />
               {isSignUp ? 'REGISTER' : 'ENCRYPTED'}
             </span>
           </div>
 
           {/* Mode Toggle Segmented Control */}
-          <div className="mb-6 flex rounded-lg border border-edge bg-abyss p-1">
+          <div className="mb-2.5 flex rounded-lg border border-edge bg-abyss p-0.5">
             <button
               type="button"
               onClick={() => {
@@ -167,13 +167,13 @@ export default function LoginPage() {
                 setLocalError('')
                 setSuccessMessage('')
               }}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-md py-2 font-mono text-xs uppercase tracking-widest transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-md py-1.5 font-mono text-[11px] uppercase tracking-wider transition-all ${
                 !isSignUp
                   ? 'bg-neon/10 text-neon-bright shadow-neon-sm border border-neon/30'
                   : 'text-slate-500 hover:text-slate-300'
               }`}
             >
-              <User className="h-3.5 w-3.5" /> SIGN IN
+              <User className="h-3 w-3" /> SIGN IN
             </button>
             <button
               type="button"
@@ -182,34 +182,34 @@ export default function LoginPage() {
                 setLocalError('')
                 setSuccessMessage('')
               }}
-              className={`flex-1 flex items-center justify-center gap-2 rounded-md py-2 font-mono text-xs uppercase tracking-widest transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-md py-1.5 font-mono text-[11px] uppercase tracking-wider transition-all ${
                 isSignUp
                   ? 'bg-amber-500/10 text-amber-500 shadow-neon-sm border border-amber-500/30'
                   : 'text-slate-500 hover:text-slate-300'
               }`}
             >
-              <User className="h-3.5 w-3.5" /> SIGN UP / REGISTER
+              <User className="h-3 w-3" /> SIGN UP / REGISTER
             </button>
           </div>
 
           {/* Primary Authentication Option: Google Sign-In */}
-          <div className="mb-6">
+          <div className="mb-2.5">
             <motion.button
                 type="button"
                 onClick={handleGoogleLogin}
                 disabled={googleLoading || authLoading}
-                whileHover={{ scale: googleLoading ? 1 : 1.015 }}
-                whileTap={{ scale: googleLoading ? 1 : 0.985 }}
-                className="relative flex w-full items-center justify-center gap-3 rounded-lg border border-slate-700 bg-slate-900/90 py-3 px-4 font-mono text-xs font-semibold uppercase tracking-wider text-slate-100 shadow-md hover:border-neon/40 hover:bg-slate-800 transition-all disabled:opacity-75"
+                whileHover={{ scale: googleLoading ? 1 : 1.01 }}
+                whileTap={{ scale: googleLoading ? 1 : 0.99 }}
+                className="relative flex w-full items-center justify-center gap-2.5 rounded-lg border border-slate-700 bg-slate-900/90 py-2 px-3 font-mono text-xs font-semibold uppercase tracking-wider text-slate-100 shadow-md hover:border-neon/40 hover:bg-slate-800 transition-all disabled:opacity-75"
               >
                 {googleLoading ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin text-neon-bright" />
+                    <Loader2 className="h-3.5 w-3.5 animate-spin text-neon-bright" />
                     <span>Authenticating with Google...</span>
                   </>
                 ) : (
                   <>
-                    <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
+                    <svg className="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24">
                       <path
                         fill="#4285F4"
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -233,28 +233,28 @@ export default function LoginPage() {
               </motion.button>
           </div>
 
-          <div className="my-6 flex items-center justify-center gap-4">
+          <div className="my-2.5 flex items-center justify-center gap-3">
             <div className="h-px flex-1 bg-slate-700/60" />
-            <div className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
+            <div className="font-mono text-[9px] uppercase tracking-widest text-slate-500">
               OR OFFICER CREDENTIALS
             </div>
             <div className="h-px flex-1 bg-slate-700/60" />
           </div>
 
-          <form onSubmit={handleEmailSubmit} className="space-y-5">
+          <form onSubmit={handleEmailSubmit} className="space-y-2.5">
               {isSignUp && (
                 <div>
-                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                  <label className="mb-1 block font-mono text-[10px] uppercase tracking-wider text-slate-400">
                     Full Name & Designation
                   </label>
                   <div className="group relative">
-                    <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-600 transition-colors group-focus-within:text-neon-bright" />
+                    <User className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-600 transition-colors group-focus-within:text-neon-bright" />
                     <input
                       type="text"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="Inspector R. Sharma"
-                      className="w-full rounded-lg border border-edge bg-abyss/80 py-2.5 pl-10 pr-3 font-mono text-sm text-slate-200 outline-none transition-all placeholder:text-slate-600 focus:border-neon focus:shadow-neon-sm"
+                      className="w-full rounded-lg border border-edge bg-abyss/80 py-2 pl-9 pr-3 font-mono text-xs text-slate-200 outline-none transition-all placeholder:text-slate-600 focus:border-neon focus:shadow-neon-sm"
                     />
                   </div>
                 </div>
@@ -264,12 +264,12 @@ export default function LoginPage() {
               <div>
                 <label
                   htmlFor="officerId"
-                  className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-slate-400"
+                  className="mb-1 block font-mono text-[10px] uppercase tracking-wider text-slate-400"
                 >
                   Officer Email
                 </label>
               <div className="group relative">
-                <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-600 transition-colors group-focus-within:text-neon-bright" />
+                <User className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-600 transition-colors group-focus-within:text-neon-bright" />
                 <input
                   id="officerId"
                   type="text"
@@ -277,29 +277,29 @@ export default function LoginPage() {
                   onChange={(e) => setOfficerId(e.target.value)}
                   placeholder="KSP-XXXXX or officer@ksp.gov.in"
                   autoComplete="username"
-                  className="w-full rounded-lg border border-edge bg-abyss/80 py-2.5 pl-10 pr-3 font-mono text-sm text-slate-200 outline-none transition-all placeholder:text-slate-600 focus:border-neon focus:shadow-neon-sm"
+                  className="w-full rounded-lg border border-edge bg-abyss/80 py-2 pl-9 pr-3 font-mono text-xs text-slate-200 outline-none transition-all placeholder:text-slate-600 focus:border-neon focus:shadow-neon-sm"
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <div className="mb-1.5 flex items-center justify-between">
+              <div className="mb-1 flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block font-mono text-[11px] uppercase tracking-wider text-slate-400"
+                  className="block font-mono text-[10px] uppercase tracking-wider text-slate-400"
                 >
                   Password
                 </label>
                 <button
                   type="button"
-                  className="font-mono text-[11px] text-neon-bright/80 transition-colors hover:text-neon-bright hover:underline"
+                  className="font-mono text-[10px] text-neon-bright/80 transition-colors hover:text-neon-bright hover:underline"
                 >
                   Forgot Password?
                 </button>
               </div>
               <div className="group relative">
-                <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-600 transition-colors group-focus-within:text-neon-bright" />
+                <Lock className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-600 transition-colors group-focus-within:text-neon-bright" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -307,45 +307,45 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••"
                   autoComplete="current-password"
-                  className="w-full rounded-lg border border-edge bg-abyss/80 py-2.5 pl-10 pr-10 font-mono text-sm text-slate-200 outline-none transition-all placeholder:text-slate-600 focus:border-neon focus:shadow-neon-sm"
+                  className="w-full rounded-lg border border-edge bg-abyss/80 py-2 pl-9 pr-9 font-mono text-xs text-slate-200 outline-none transition-all placeholder:text-slate-600 focus:border-neon focus:shadow-neon-sm"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 transition-colors hover:text-neon-bright"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-600 transition-colors hover:text-neon-bright"
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                 </button>
               </div>
             </div>
 
             {/* Role dropdown */}
             <div className="relative z-50">
-              <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-slate-400">
+              <label className="mb-1 block font-mono text-[10px] uppercase tracking-wider text-slate-400">
                 Role
               </label>
               <button
                 type="button"
                 onClick={() => setRoleOpen((v) => !v)}
-                className={`flex w-full items-center justify-between rounded-lg border bg-slate-900 py-2.5 px-3 text-left text-sm transition-all ${
+                className={`flex w-full items-center justify-between rounded-lg border bg-slate-900 py-2 px-3 text-left text-xs transition-all ${
                   roleOpen ? 'border-neon shadow-neon-sm' : 'border-edge'
                 } ${role ? 'text-slate-200' : 'text-slate-600'}`}
               >
                 {role || 'Select role'}
                 <ChevronDown
-                  className={`h-4 w-4 text-slate-500 transition-transform ${roleOpen ? 'rotate-180 text-neon-bright' : ''}`}
+                  className={`h-3.5 w-3.5 text-slate-500 transition-transform ${roleOpen ? 'rotate-180 text-neon-bright' : ''}`}
                 />
               </button>
 
               <AnimatePresence>
                 {roleOpen && (
                   <motion.ul
-                    initial={{ opacity: 0, y: -6 }}
+                    initial={{ opacity: 0, y: -4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
+                    exit={{ opacity: 0, y: -4 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute z-[100] mt-1.5 w-full overflow-hidden rounded-lg border border-neon/30 bg-slate-900 shadow-neon-md backdrop-blur-xl"
+                    className="absolute z-[100] mt-1 w-full overflow-hidden rounded-lg border border-neon/30 bg-slate-900 shadow-neon-md backdrop-blur-xl"
                   >
                     {ROLES.map((r) => (
                       <li key={r}>
@@ -355,7 +355,7 @@ export default function LoginPage() {
                             setRole(r)
                             setRoleOpen(false)
                           }}
-                          className="flex w-full items-center px-3 py-2.5 text-left text-sm text-slate-300 transition-colors hover:bg-neon/10 hover:text-neon-bright bg-slate-900"
+                          className="flex w-full items-center px-3 py-2 text-left text-xs text-slate-300 transition-colors hover:bg-neon/10 hover:text-neon-bright bg-slate-900"
                         >
                           {r}
                         </button>
@@ -367,20 +367,20 @@ export default function LoginPage() {
             </div>
 
             {/* Remember me */}
-            <label className="flex cursor-pointer items-center gap-2.5 select-none">
+            <label className="flex cursor-pointer items-center gap-2 select-none">
               <span
                 onClick={() => setRememberMe((v) => !v)}
-                className={`flex h-4 w-4 items-center justify-center rounded border transition-all ${
+                className={`flex h-3.5 w-3.5 items-center justify-center rounded border transition-all ${
                   rememberMe ? 'border-neon bg-neon shadow-neon-sm' : 'border-edge bg-abyss/80'
                 }`}
               >
                 {rememberMe && (
-                  <svg viewBox="0 0 12 12" className="h-2.5 w-2.5 fill-none stroke-abyss stroke-[2.5]">
+                  <svg viewBox="0 0 12 12" className="h-2 w-2 fill-none stroke-abyss stroke-[2.5]">
                     <path d="M2 6.5L4.5 9L10 3" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 )}
               </span>
-              <span className="font-mono text-[11px] uppercase tracking-wider text-slate-400">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-slate-400">
                 Remember this terminal
               </span>
             </label>
@@ -392,7 +392,7 @@ export default function LoginPage() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="mb-4 rounded-lg border border-green-500/30 bg-green-500/10 p-3 font-mono text-xs text-green-400"
+                  className="mb-2 rounded-lg border border-green-500/30 bg-green-500/10 p-2 font-mono text-xs text-green-400"
                 >
                   {successMessage}
                 </motion.div>
@@ -406,7 +406,7 @@ export default function LoginPage() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 font-mono text-xs text-red-400"
+                  className="rounded-lg border border-red-500/30 bg-red-500/10 p-2 font-mono text-xs text-red-400"
                 >
                   {displayError}
                 </motion.div>
@@ -416,15 +416,15 @@ export default function LoginPage() {
             {/* Password Login submit */}
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.015 }}
-              whileTap={{ scale: 0.985 }}
-              className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg bg-gradient-to-r from-neon-dim via-neon to-neon-bright py-3 font-display text-sm font-semibold uppercase tracking-widest text-slate-900 shadow-neon-md transition-shadow"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg bg-gradient-to-r from-neon-dim via-neon to-neon-bright py-2.5 font-display text-xs font-semibold uppercase tracking-widest text-slate-900 shadow-neon-md transition-shadow"
             >
-              <ShieldCheck className="h-4 w-4" />
+              <ShieldCheck className="h-3.5 w-3.5" />
               {isSignUp ? 'Create Officer Account' : 'Officer ID Login'}
             </motion.button>
             
-            <div className="mt-4 flex justify-center">
+            <div className="mt-2.5 flex justify-center">
               <button
                 type="button"
                 onClick={() => {
@@ -432,7 +432,7 @@ export default function LoginPage() {
                   setLocalError('')
                   setSuccessMessage('')
                 }}
-                className="font-mono text-[11px] text-slate-400 transition-colors hover:text-neon-bright"
+                className="font-mono text-[10px] text-slate-400 transition-colors hover:text-neon-bright"
               >
                 {isSignUp
                   ? 'Already have an account? Sign In'
@@ -445,8 +445,8 @@ export default function LoginPage() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mt-5 text-center font-mono text-[10px] uppercase tracking-widest text-slate-600"
+          transition={{ delay: 0.3 }}
+          className="mt-2.5 text-center font-mono text-[9px] uppercase tracking-widest text-slate-600"
         >
           Unauthorized access is a criminal offence &middot; All activity is logged
         </motion.p>

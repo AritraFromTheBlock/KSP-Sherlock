@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Sidebar from './Sidebar';
 import TopNav from './TopNav';
+import AnimatedBackground from '../AnimatedBackground';
 
 const DashboardLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
@@ -12,19 +13,19 @@ const DashboardLayout: React.FC = () => {
   const currentPage = pathSegments.length > 1 ? pathSegments[pathSegments.length - 1] : 'dashboard';
 
   return (
-    <div className="flex h-screen overflow-hidden bg-void text-slate-200">
+    <div className="flex h-screen overflow-hidden bg-void text-slate-200 relative">
+      {/* Live Tactical Surveillance Radar & Dynamic Grid Background */}
+      <AnimatedBackground />
+
       <Sidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
       
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative z-10">
         <TopNav 
           onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
           currentPage={currentPage} 
         />
         
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-void relative">
-          {/* Subtle background glow effect */}
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-neon/5 rounded-full blur-[120px] pointer-events-none" />
-          
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-transparent relative">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}

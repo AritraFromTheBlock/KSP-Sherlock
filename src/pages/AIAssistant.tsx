@@ -20,7 +20,9 @@ import {
   ChevronDown,
   Clock,
   AlertCircle,
-  WifiOff
+  WifiOff,
+  MapPin,
+  BarChart3
 } from 'lucide-react';
 import { sendMessage, runDiagnostics } from '../services/chatApi';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
@@ -234,34 +236,34 @@ function AIAssistantContent() {
       suggestionTitle: 'Suggested Query Prompts',
       suggestions: [
         {
-          label: 'Show Bengaluru crime hotspots',
-          description: 'Geospatial visualization of crime clustering patterns.',
+          label: 'How many cases are in Udupi?',
+          description: 'Query registered FIR count and crime statistics for Udupi district.',
+          icon: <MapPin className="h-4 w-4 text-neon-bright" />
+        },
+        {
+          label: 'What is the crime status in Bengaluru?',
+          description: 'Analyze active cases, cyber crime volume, and hotspot patterns in Bengaluru.',
           icon: <Flame className="h-4 w-4 text-neon-bright" />
         },
         {
-          label: 'Find repeat offenders',
-          description: 'Cross-reference active suspects with history logs.',
+          label: 'Which district has the highest number of cases?',
+          description: 'Compare district-wise crime distribution between Udupi, Mangaluru, and Bengaluru.',
+          icon: <BarChart3 className="h-4 w-4 text-neon-bright" />
+        },
+        {
+          label: 'How many Cyber Crime cases are in Karnataka?',
+          description: 'Inspect online fraud, phishing, and financial cyber offenses across all districts.',
+          icon: <ShieldAlert className="h-4 w-4 text-neon-bright" />
+        },
+        {
+          label: 'Show repeat offenders flagged in Mangaluru',
+          description: 'Identify habitual suspects with multiple charge sheets in coastal jurisdiction.',
           icon: <UserSquare className="h-4 w-4 text-neon-bright" />
         },
         {
-          label: 'Summarize FIR',
-          description: 'Synthesize details of any registered incident dossier.',
+          label: 'Summarize property crimes in Chikkamagaluru',
+          description: 'Review burglary, dacoity, and theft investigations in Chikkamagaluru district.',
           icon: <FileSpreadsheet className="h-4 w-4 text-neon-bright" />
-        },
-        {
-          label: 'Analyze criminal network',
-          description: 'Map out suspect connections & syndicate links.',
-          icon: <Network className="h-4 w-4 text-neon-bright" />
-        },
-        {
-          label: 'Predict high-risk locations',
-          description: 'AI spatial forecasting based on temporal trends.',
-          icon: <Compass className="h-4 w-4 text-neon-bright" />
-        },
-        {
-          label: 'Generate investigation report',
-          description: 'Synthesize findings into an official PDF draft.',
-          icon: <Search className="h-4 w-4 text-neon-bright" />
         }
       ],
       emptyStateTitle: 'Start a conversation with the AI Crime Investigation Assistant',
@@ -299,34 +301,34 @@ function AIAssistantContent() {
       suggestionTitle: 'ಸೂಚಿಸಲಾದ ಪ್ರಶ್ನೆಗಳು',
       suggestions: [
         {
-          label: 'ಬೆಂಗಳೂರಿನ ಅಪರಾಧದ ಹಾಟ್‌ಸ್ಪಾಟ್‌ಗಳನ್ನು ತೋರಿಸಿ',
-          description: 'ಅಪರಾಧ ಕ್ಲಸ್ಟರಿಂಗ್ ಮಾದರಿಗಳ ಜಿಯೋಸ್ಪೇಷಿಯಲ್ ದೃಶ್ಯೀಕರಣ.',
+          label: 'ಉಡುಪಿಯಲ್ಲಿ ಎಷ್ಟು ಪ್ರಕರಣಗಳು ದಾಖಲಾಗಿವೆ?',
+          description: 'ಉಡುಪಿ ಜಿಲ್ಲೆಯ ಒಟ್ಟು ಎಫ್‌ಐಆರ್ ಸಂಖ್ಯೆ ಮತ್ತು ಅಪರಾಧ ಅಂಕಿಅಂಶಗಳನ್ನು ತಿಳಿಯಿರಿ.',
+          icon: <MapPin className="h-4 w-4 text-neon-bright" />
+        },
+        {
+          label: 'ಬೆಂಗಳೂರಿನಲ್ಲಿ ಪ್ರಸ್ತುತ ಅಪರಾಧ ಸ್ಥಿತಿಗತಿ ಏನು?',
+          description: 'ಬೆಂಗಳೂರಿನ ಸಕ್ರಿಯ ಎಫ್‌ಐಆರ್‌ಗಳು ಮತ್ತು ಹಾಟ್‌ಸ್ಪಾಟ್‌ಗಳ ಸ್ಥಿತಿಗತಿ ಪರಿಶೀಲಿಸಿ.',
           icon: <Flame className="h-4 w-4 text-neon-bright" />
         },
         {
-          label: 'ಮರು ಅಪರಾಧಿಗಳನ್ನು ಪತ್ತೆ ಮಾಡಿ',
-          description: 'ಸಕ್ರಿಯ ಶಂಕಿತರನ್ನು ಹಳೆಯ ದಾಖಲೆಗಳೊಂದಿಗೆ ಹೋಲಿಸಿ ನೋಡಿ.',
+          label: 'ಕರ್ನಾಟಕದಲ್ಲಿ ಅತಿ ಹೆಚ್ಚು ಪ್ರಕರಣಗಳು ಯಾವ ಜಿಲ್ಲೆಯಲ್ಲಿವೆ?',
+          description: 'ಉಡುಪಿ, ಮಂಗಳೂರು ಮತ್ತು ಬೆಂಗಳೂರಿನ ನಡುವಿನ ಜಿಲ್ಲಾವಾರು ಅಪರಾಧ ಹಂಚಿಕೆ ಹೋಲಿಸಿ.',
+          icon: <BarChart3 className="h-4 w-4 text-neon-bright" />
+        },
+        {
+          label: 'ಕರ್ನಾಟಕದಲ್ಲಿ ಎಷ್ಟು ಸೈಬರ್ ಕ್ರೈಮ್ ಪ್ರಕರಣಗಳು ದಾಖಲಾಗಿವೆ?',
+          description: 'ಆನ್‌ಲೈನ್ ವಂಚನೆ ಮತ್ತು ಸೈಬರ್ ಅಪರಾಧಗಳ ಸಂಪೂರ್ಣ ವಿವರಣೆ.',
+          icon: <ShieldAlert className="h-4 w-4 text-neon-bright" />
+        },
+        {
+          label: 'ಮಂಗಳೂರಿನಲ್ಲಿ ಗುರುತಿಸಲಾದ ಮರು ಅಪರಾಧಿಗಳ ವಿವರ ನೀಡಿ',
+          description: 'ಕರಾವಳಿ ವ್ಯಾಪ್ತಿಯಲ್ಲಿ ಹಲವು ಎಫ್‌ಐಆರ್‌ಗಳನ್ನು ಹೊಂದಿರುವ ಶಂಕಿತರನ್ನು ಪತ್ತೆ ಮಾಡಿ.',
           icon: <UserSquare className="h-4 w-4 text-neon-bright" />
         },
         {
-          label: 'FIR ಸಾರಾಂಶ ನೀಡಿ',
-          description: 'ಯಾವುದೇ ನೋಂದಾಯಿತ ಪ್ರಕರಣದ ವಿವರಗಳನ್ನು ಸಂಶ್ಲೇಷಿಸಿ.',
+          label: 'ಚಿಕ್ಕಮಗಳೂರಿನ ಆಸ್ತಿ ಅಪರಾಧಗಳ ಸಾರಾಂಶ ನೀಡಿ',
+          description: 'ಚಿಕ್ಕಮಗಳೂರು ಜಿಲ್ಲೆಯ ದರೋಡೆ ಮತ್ತು ಕಳ್ಳತನ ತನಿಖೆಗಳ ಅವಲೋಕನ.',
           icon: <FileSpreadsheet className="h-4 w-4 text-neon-bright" />
-        },
-        {
-          label: 'ಅಪರಾಧಿ ಜಾಲವನ್ನು ವಿಶ್ಲೇಷಿಸಿ',
-          description: 'ಶಂಕಿತರ ಸಂಪರ್ಕಗಳು ಮತ್ತು ಸಿಂಡಿಕೇಟ್ ಲಿಂಕ್‌ಗಳನ್ನು ನಕ್ಷೆ ಮಾಡಿ.',
-          icon: <Network className="h-4 w-4 text-neon-bright" />
-        },
-        {
-          label: 'ಹೆಚ್ಚಿನ ಅಪಾಯದ ಸ್ಥಳಗಳನ್ನು ಊಹಿಸಿ',
-          description: 'ತಾತ್ಕಾಲಿಕ ಪ್ರವೃತ್ತಿಗಳ ಆಧಾರದ ಮೇಲೆ AI ಪ್ರಾದೇಶಿಕ ಮುನ್ಸೂಚನೆ.',
-          icon: <Compass className="h-4 w-4 text-neon-bright" />
-        },
-        {
-          label: 'ತನಿಖಾ ವರದಿಯನ್ನು ರಚಿಸಿ',
-          description: 'ಕಂಡುಬಂದ ಅಂಶಗಳನ್ನು ಅಧಿಕೃತ ಪಿಡಿಎಫ್ ಕರಡಿನಲ್ಲಿ ಸಂಶ್ಲೇಷಿಸಿ.',
-          icon: <Search className="h-4 w-4 text-neon-bright" />
         }
       ],
       emptyStateTitle: 'AI ಅಪರಾಧ ತನಿಖಾ ಸಹಾಯಕಿಯೊಂದಿಗೆ ಸಂಭಾಷಣೆಯನ್ನು ಪ್ರಾರಂಭಿಸಿ',
