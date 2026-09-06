@@ -376,7 +376,7 @@ export default function MysterySolver() {
             {healthStatus.online ? (
               <>
                 <Wifi className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-400">Railway API Connected</span>
+                <span className="text-emerald-400">Connected</span>
                 <span className="text-slate-500">({healthStatus.latencyMs}ms)</span>
               </>
             ) : (
